@@ -1206,8 +1206,8 @@ var m2_tst = []
 # ---
 var w_m_k2 = [] # war_m_kle2[] // квиток масива клеток для поля боя.
 
-const w_m_k2__xt = 16 #var w_m_k2__xt := 0
-const w_m_k2__yt = 16 #var w_m_k2__yt := 0
+const w_m_k2__xt = 14 #16 #var w_m_k2__xt := 0
+const w_m_k2__yt = 15 #16 #var w_m_k2__yt := 0
 
 var w_m_k2__len := 0 # status  # do not use  w_m_k2.size
 
@@ -1766,7 +1766,7 @@ func kle__h_near6( h: int,  h2: int,  m, ln: int, xt: int):
 
 
 
-# int t_HexPole::Ych_Dist_wh44k( int k, int y2)
+
 
 func w_m_k2__h_dist( h: int, h2: int):
 	#
@@ -1787,7 +1787,7 @@ func w_m_k2__h_dir2( h: int, h2: int):
 
 
 
-# int t_HexPole::Ych_Near6_wh44k( int k, int y2)
+
 
 func w_m_k2__h_near6( h: int, h2: int):
 	if w_m_k2__h_dist( h, h2) == 1:
@@ -1800,7 +1800,8 @@ func w_m_k2__h_near6( h: int, h2: int):
 
 
 
-# int t_HexPole::Ych_NearLeft3Hex(int yCentr, int y2)
+
+
 func kle__near_left_3( h: int,  h2: int,  m, ln: int,  xt: int):
 	# h == centr
 	if h_get_orig( h, m, ln) == land__border: return 0
@@ -1818,7 +1819,8 @@ func kle__near_left_3( h: int,  h2: int,  m, ln: int,  xt: int):
 	return 0;
 
 
-# int t_HexPole::Ych_NearRit3Hex(int yCentr, int y2)
+
+
 func kle__near_rit_3( h: int,  h2: int,  m, ln: int,  xt: int):
 	# h == centr
 	if h_get_orig( h, m, ln) == land__border: return 0
@@ -1870,23 +1872,23 @@ func kle__in_priv(h: int, h2: int, m, ln: int,xt: int,yt: int, skip, one, mult, 
 	return 0
 
 
-# int t_HexPole::Ych_inRitUpLine(int yCentr, int y2, int skipKlv =0, int one =0)
+
 func kle__in_rit_up_line( h: int, h2: int, m, ln: int, xt: int, yt: int, skip, one):
 	return kle__in_priv( h, h2, m, ln, xt, yt, skip, one, -1, 0, 1)
 
 
-# int t_HexPole::Ych_inRitDnLine(int yCentr, int y2, int skipKlv =0, int one =0)
+
 func kle__in_rit_dn_line( h: int, h2: int, m, ln: int, xt: int, yt: int, skip, one):
 	return kle__in_priv( h, h2, m, ln, xt, yt, skip, one, 1, 0, 1)
 
 
 
-# int t_HexPole::Ych_inLeftDnLine(int yCentr, int y2, int skipKlv =0, int one =0)
+
 func kle__in_left_dn_line( h: int, h2: int, m, ln: int, xt: int, yt: int, skip, one):
 	return kle__in_priv( h, h2, m, ln, xt, yt, skip, one, 1, -1, 0)
 
 
-# int t_HexPole::Ych_inLeftUpLine(int yCentr, int y2, int skipKlv =0, int one =0)
+
 func kle__in_left_up_line( h: int, h2: int, m, ln: int, xt: int, yt: int, skip, one):
 	return kle__in_priv( h, h2, m, ln, xt, yt, skip, one, -1, -1, 0)
 
@@ -1895,7 +1897,7 @@ func kle__in_left_up_line( h: int, h2: int, m, ln: int, xt: int, yt: int, skip, 
 
 
 
-# int t_HexPole::Ych_NearBelt2(int yCentr, int y2)
+
 
 func kle__near_belt2( h: int,  h2: int,  m, ln: int,  xt: int, yt: int):
 	# h == centr
@@ -1926,7 +1928,7 @@ func kle__near_belt2( h: int,  h2: int,  m, ln: int,  xt: int, yt: int):
 
 
 
-# int t_HexPole::Ych_NearBelt3(int yCentr, int y2)
+
 
 func kle__near_belt3( h: int,  h2: int,  m, ln: int,  xt: int, yt: int):
 	# h == centr
@@ -1962,7 +1964,7 @@ func kle__near_belt3( h: int,  h2: int,  m, ln: int,  xt: int, yt: int):
 
 
 
-# int t_HexPole::Ych_NearBelt4(int yCentr, int y2)
+
 
 func kle__near_belt4( h: int,  h2: int,  m, ln: int,  xt: int, yt: int):
 	# h == centr
@@ -2015,10 +2017,9 @@ func kle__near_belt4( h: int,  h2: int,  m, ln: int,  xt: int, yt: int):
 
 
 
-#int t_HexPole::NomYchUnder( int xe, int ye,
-#     int poleX, int poleNiz, int tileW, int tileH)
 
 func NomHex_Under( ln: int, xt: int, yt: int,  xe, ye, bX, bNiz, tileW, tileH ):
+	# proc update - test ok.
 	if xe < 0: return -1
 	if ye < 0: return -1
 	if tileW < 8: return -1 # слишком мелкие не-допускать
@@ -2026,35 +2027,39 @@ func NomHex_Under( ln: int, xt: int, yt: int,  xe, ye, bX, bNiz, tileW, tileH ):
 
 	var oY := 0
 	oY = ye - bNiz
-	if oY < 1: return -1
+	if oY < 1: return -1 # не попали в поле.
 
 	var nomLine := 0
-	nomLine = (oY / tileH) # самая нижняя это линия номер Ноль
+	nomLine = (oY / tileH) # самая нижняя это линия номер Ноль.
+	# Низ поля сверху от формального верха поля, потому-что угрик
+	# системы координат идёт вниз, повышая своё значение.
+
 
 	# ---
 	# посмотреть попадет-ли курсор в более тонкую линию (это важно)
 	var NizPorog := 0
 
 	NizPorog = 1 + bNiz + (tileH * nomLine) + (tileH / 6);
-	if ye < NizPorog: return -1
+	if ye < NizPorog: return -1 # спорная линия между тайлов.
 
 	NizPorog = bNiz + (tileH * (nomLine + 1)) - (tileH / 6) - 1;
-	if ye > NizPorog: return -1
+	if ye > NizPorog: return -1 # спорная линия.
 
 
-	nomLine = (yt - 1) - nomLine # обернуть
+	#nomLine = (yt - 1) - nomLine # обернуть.
+	# GODOT взял традицию Директ-хикса, и _оборот не надо делать.
 
 	if nomLine % 2:
 		xe += (tileW / 2) # рисуют сдвигая влево - здесь вернем вправо ...
 
 	var oX := 0
 	oX = xe - bX # офсет гориз внутри поля.
-	if oX < 1: return -1 # курсор за левой стенкой
+	if oX < 1: return -1 # курсор за левой стенкой.
 
 
 	var poleW := 0
-	poleW = xt * tileW
-	if xe > (bX + poleW): return -1
+	poleW = xt * tileW # шырь поля
+	if xe > (bX + poleW): return -1 # курсор за правой стенкой.
 
 	var poleH := 0
 	poleH = yt * tileH
@@ -2067,14 +2072,14 @@ func NomHex_Under( ln: int, xt: int, yt: int,  xe, ye, bX, bNiz, tileW, tileH ):
 	# До этого, мы проверяли попадание даже в борта - для нужд редактирования.
 	# Теперь проверить Борт-ли это и если борт вернуть -1
 
-	if kle__is_left_bort( nomT, ln, xt):
-		return -1
-	elif kle__is_rit_bort(nomT, ln, xt):
-		return -1
-	elif kle__is_top_bort(nomT, ln, xt):
-		return -1
-	elif kle__is_btm_bort(nomT, ln, xt):
-		return -1
+	#if kle__is_left_bort( nomT, ln, xt):
+	#	return -1
+	#elif kle__is_rit_bort(nomT, ln, xt):
+	#	return -1
+	#elif kle__is_top_bort(nomT, ln, xt):
+	#	return -1
+	#elif kle__is_btm_bort(nomT, ln, xt):
+	#	return -1
 
 	return nomT;
 
@@ -2460,10 +2465,10 @@ func e_m_k__re_init( x_tiles: int = 16, y_tiles: int = 16):
 	# оставляем хвост, если нам надо меньшэ, чем было, но помним,
 	# что везде надо использовать e_m_k__len, вместо e_m_k.size
 	
-	if ! e_m_k.size():
-		print( "Err e_m_k   xt:", e_m_k__xt, "  yt:", e_m_k__yt)
-	else:
-		print( "Mem e_m_k   size: ", e_m_k.size())
+	#if ! e_m_k.size():
+	#	print( "Err e_m_k   xt:", e_m_k__xt, "  yt:", e_m_k__yt)
+	#else:
+	#	print( "Mem e_m_k   size: ", e_m_k.size())
 
 	for i in range( 0, e_m_k__len):
 		if ! e_m_k[ i]:
