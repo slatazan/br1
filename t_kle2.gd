@@ -1,5 +1,7 @@
 # struct wo name == const t_kle2 = preload( "t_kle2.gd")
 extends Object # extends Node
+# version 102
+
 
 # static typing == Godot vers 3.1
 
@@ -46,12 +48,21 @@ func clear_all( val: int = 0):
 		b_dir2.resize( 256)
 	for i in range( 0, b_dir2.size()):
 		b_dir2[ i] = 0
+#---------
+
+
+func clear_links():
+	unit_mas_nom = 0
+	unit_mas_uniq = 0
+	dead_nom = 0
+	dead_uniq = 0
+#---------
 
 
 func init( val, tex):
 	vis = tex
 	orig_land = val
-
+#---------
 
 
 func set_from1( kle: int, dist0_16_to_kle: int, dir1_12_to_kle: int):
@@ -75,6 +86,9 @@ func set_from1( kle: int, dist0_16_to_kle: int, dir1_12_to_kle: int):
 	b_dir2[ kle] = dir1_12_to_kle
 
 	return 1
+#---------
 
 
-
+# save_to
+#
+# load_from

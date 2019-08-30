@@ -1,5 +1,10 @@
 tool # in script_names_list --> rit klik menu --> RUN
 extends EditorScript
+# version 102
+
+
+#const g22 = preload( "g2.gd") # проблему не раешает
+
 
 var glob_scan_stad := 0
 
@@ -10,13 +15,13 @@ const glob_scan_err__scan_bad_format = 3
 const glob_scan_err__dzag_const = 4
 
 
-var glo2__format_name_zag_bin = "res://zag/%d"
-var glo2__format_name_zag_h = "res://zag/%d.h"
-# glo2.format_name_zag_h
+var g2__format_name_zag_bin = "res://zag/%d"
+var g2__format_name_zag_h = "res://zag/%d.h"
+# g2.format_name_zag_h
 # Почему-то их не видят на перво-начальных местах ...
-# glo2.m_z_last  видят ... мутновато.
+# g2.m_z_last  видят ... мутновато.
 # И всё-таки, не увидели, в очередную загрузку проекта.
-const glo2__m_z_last = 820 # дублируем
+const g2__m_z_last = 820 # дублируем
 
 
 var dzag = {}
@@ -38,6 +43,9 @@ func scan_err_print( i, k):
 	print( "Err scan: line_", i, "  nom_file: ", k)
 
 
+# !! g2.str_start_digital
+
+
 # --- scan
 # space = 32 // надо убрать в начале, и в конце найденого
 # + = 43
@@ -46,7 +54,7 @@ func scan_err_print( i, k):
 # Если есть хоть один такой символ, или байт,
 # то можно считать число нормальным, а иначе _через_словарик.
 
-func str_start_digital( st) -> bool:
+func str_start_digital( st) -> bool: # проца в двух местах
 	var buf = st.to_ascii() # st.( 123an)
 	
 	for i in range( 0, st.length()):
@@ -62,6 +70,9 @@ func str_start_digital( st) -> bool:
 		else:
 			break
 	return false
+
+
+
 
 
 
@@ -149,7 +160,8 @@ func scan__next( from_file) -> int: # val__from_file_next_line
 	#print( val2)
 	#print( "------")
 
-	if str_start_digital( s1): # число
+	#if g22.str_start_digital( s1): # число # null instance
+	if str_start_digital( s1): # число # local copy
 		#print( "--- s1.to_int")
 		return scan__op( s1.to_int(), op, val2)
 		# a.( z_name+11 // )  считаем извратом, и не рекомендуем.
@@ -172,7 +184,7 @@ func scan__next( from_file) -> int: # val__from_file_next_line
 
 func scan_zag_tab__next_item( k, f):
 	var rec = File.new()
-	var name = glo2__format_name_zag_bin % k
+	var name = g2__format_name_zag_bin % k
 
 	rec.open( name, rec.WRITE)
 	if ! rec.is_open():
@@ -181,25 +193,28 @@ func scan_zag_tab__next_item( k, f):
 
 	# rec, как аргумент == запихивать все бин-файлы в один сборник,
 	# ставя номер файла и колво чисел, перед очередной анкетой.
-	# const q = 151;  rec.store_32( k);  rec.store_32( q)
-	# for i in range( 1, q+1): rec.store_32( scan__next( f));
+	# const q = 151;  rec.store_64( k);  rec.store_64( q)
+	# for i in range( 1, q+1): rec.store_64( scan__next( f));
 
 	for i in range( 1, 152):
-		rec.store_32( scan__next( f)) # int lines
+		rec.store_64( scan__next( f)) # int lines
 		if glob_scan_err:
 			scan_err_print( i, k)
 			break # i
 
 	if ! glob_scan_err:
 		var str_name = f.get_line()
-		rec.store_32( str_name.length() )
-		rec.store_buffer( str_name.to_ascii()) # string as PoolByteArray.
-		# В пределах 127, потому-что рус-буквы сжали-заменили,
-		# или сделали их отрицательными (я не вникал).
+
+		var bu = str_name.to_utf8() # PoolByteArray
+		rec.store_64( bu.size() )
+		rec.store_buffer( bu)
+		# OR
+#		rec.store_64( str_name.length() )
+#		rec.store_buffer( str_name.to_ascii()) # string as PoolByteArray.
 
 	rec.close()
-	# rec.store_32( an)
-	# an = rec.get_32()
+	# rec.store_64( an)
+	# an = rec.get_64()
 
 
 
@@ -247,7 +262,7 @@ func scan_zag_tab__dzag():
 	glob_scan_err = 0
 	# оформить закачку словарика dzag..
 	var src = File.new()
-	var name := "res://glo2.gd"
+	var name := "res://g2.gd"
 
 	src.open( name, src.READ)
 	if ! src.is_open():
@@ -293,11 +308,11 @@ func scan_zag_tab():
 
 	var file = File.new()
 	var q = 0;
-	for k in range( 1, glo2__m_z_last +1):
+	for k in range( 1, g2__m_z_last +1):
 	#for k in range( 1, 3): # test2
 		#
-		#var name = glo2.format_name_zag_h % k #  Invalid get index
-		var name = glo2__format_name_zag_h % k
+		#var name = g2.format_name_zag_h % k #  Invalid get index
+		var name = g2__format_name_zag_h % k
 		file.open( name, file.READ)
 		if file.is_open():
 			scan_zag_tab__next_item( k, file)
